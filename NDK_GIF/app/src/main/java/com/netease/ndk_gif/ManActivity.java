@@ -34,9 +34,9 @@ public class ManActivity extends Activity {
         setContentView(R.layout.activity_main);
         imageView = findViewById(R.id.sample_text);
 
-        //new Thread(){
-        //    @Override
-      //      public void run() {
+        new Thread(){
+           @Override
+           public void run() {
                 File file = new File(Environment.getExternalStorageDirectory(),"demo.gif");
                 gifHandler = new GifHandler(file.getAbsolutePath());
                 int height = gifHandler.getHeight();
@@ -44,8 +44,8 @@ public class ManActivity extends Activity {
                 bitmap = Bitmap.createBitmap(width,height, Bitmap.Config.ARGB_8888);
                 int i = gifHandler.updateFrame(bitmap);
                 mHandler.sendEmptyMessageDelayed(1,i);
-           // }
-        //}.start();
+            }
+    }.start();
 
     }
 
