@@ -18,15 +18,15 @@ public class ManActivity extends Activity {
     private ImageView imageView;
     private GifHandler gifHandler;
 
-    private Handler mHandler = new Handler(){
+    private Handler mHandler = new Handler(new Handler.Callback() {
         @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
+        public boolean handleMessage(Message msg) {
             int mNextFrame = gifHandler.updateFrame(bitmap);
             mHandler.sendEmptyMessageDelayed(1,mNextFrame);
             imageView.setImageBitmap(bitmap);
+            return false;
         }
-    };
+    });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +42,8 @@ public class ManActivity extends Activity {
                 int height = gifHandler.getHeight();
                 int width = gifHandler.getWidth();
                 bitmap = Bitmap.createBitmap(width,height, Bitmap.Config.ARGB_8888);
-                int i = gifHandler.updateFrame(bitmap);
-                mHandler.sendEmptyMessageDelayed(1,i);
+                int mNextFrame = gifHandler.updateFrame(bitmap);
+                mHandler.sendEmptyMessageDelayed(1,mNextFrame);
             }
     }.start();
 
